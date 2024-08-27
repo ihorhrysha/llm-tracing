@@ -4,6 +4,12 @@ The goal of this repo is to show progress of monitoring/observability approaches
 
 ## Steps:
 
+### 0.5.0
+The OpenTelemetry is a standard for tracing and monitoring. It has a lot of plugins for different languages and frameworks. The OpenTelemetry Python SDK is a powerful tool that can be used to trace our LLM app. The installation is simple:
+```bash
+pip install opentelemetry-api opentelemetry-sdk opentelemetry-instrumentation-fastapi opentelemetry-exporter-otlp
+```
+
 ### 0.4.0 
 The simples way to trace the LLM ap is to use LangSmith's tracing library and stream data to their servers.
 The installation is simplem since we use LangChain:
