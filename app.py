@@ -3,20 +3,13 @@ import logging
 
 from fastapi import FastAPI
 from uvicorn import Config, Server
-from pydantic_settings import BaseSettings
+from settings import app_settings
+from logger import config_logger
 
 
-logging.basicConfig(level=logging.INFO)
+config_logger()
 logger = logging.getLogger(__name__)
 
-
-class AppSettings(BaseSettings):
-    service_name: str = "llm-tracing"
-    version: str = "0.1.0"
-    log_level: str = "INFO"
-    rest_port: int = 8080
-
-app_settings = AppSettings()
 
 app = FastAPI(title=app_settings.service_name)
 
