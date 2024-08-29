@@ -24,5 +24,9 @@ WORKDIR /usr/src/app/
 COPY --from=builder /reqs /usr/local
 COPY ./src/ ./
 
-EXPOSE 8080
-ENTRYPOINT [ "python", "app.py" ]
+
+# This doesn't work quite well
+# RUN opentelemetry-bootstrap -a install
+
+# EXPOSE 8080
+ENTRYPOINT [ "opentelemetry-instrument", "flask", "--app", "app_flask.py", "run", "-p", "8080", "-h", "0.0.0.0"]

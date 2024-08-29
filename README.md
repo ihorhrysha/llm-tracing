@@ -6,9 +6,24 @@ The goal of this repo is to show progress of monitoring/observability approaches
 
 ### 0.5.0
 The OpenTelemetry is a standard for tracing and monitoring. It has a lot of plugins for different languages and frameworks. The OpenTelemetry Python SDK is a powerful tool that can be used to trace our LLM app. The installation is simple:
+Adding dependencies manually:
 ```bash
-pip install opentelemetry-api opentelemetry-sdk opentelemetry-instrumentation-fastapi opentelemetry-exporter-otlp
+opentelemetry-bootstrap -a requirements
 ```
+Since autoinstrumentation is not working properly and extra dependencies are added.
+For testing purposes will start with flask sync demo app https://opentelemetry.io/docs/languages/python/getting-started/
+
+Spinng up the app is simply:
+```bash
+docker compose up
+```
+It uses newer versiones of data sources. Alls signals(logs/metrics/traces) are sent to collector using OTLP protocol via gRPC. Then the collector sends them to the Loki(otlp over http), Prometheus and Tempo(otlp) for storage. Grafana is used for visualization.
+
+We can trace calls to LLM pipelines but with SQL auto instrumentation it is quite messy and not as intuitive as LangSmith's tracing library.
+
+![Tempo LLM](./static/tempo_llm.png)
+
+```python
 
 ### 0.4.0 
 The simples way to trace the LLM ap is to use LangSmith's tracing library and stream data to their servers.

@@ -13,9 +13,10 @@ from langchain_community.utilities import SQLDatabase
 # Primitive dependency graph
 app_settings = AppSettings()
 config_logger(min_log_level=app_settings.log_level)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title=app_settings.service_name)
-logger = logging.getLogger(__name__)
+
 
 llm=ChatOpenAI(model="gpt-3.5-turbo", temperature=0, api_key=app_settings.openai_api_key)
 db = SQLDatabase.from_uri(app_settings.db_uri)
