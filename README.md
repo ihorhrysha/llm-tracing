@@ -3,6 +3,9 @@
 The goal of this repo is to show progress of monitoring/observability approaches for LLM services in Python. I'll start with the simple logger.info() and then move to more advanced tools like OpenTelemetry and LLM-specific tracing libraries.
 
 ## Steps:
+### 0.7.0
+**k8s python app**
+
 
 ### 0.6.0
 **k8s the manual approach**
