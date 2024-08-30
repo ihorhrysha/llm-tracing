@@ -47,7 +47,7 @@ jobs:
 
     - uses: mikefarah/yq@master
       with:
-        cmd: yq -i '.image.tag=strenv(VERSION) | .image.registry=strenv(REGISTRY)  | .image.repository=strenv(REPOSITORY) infra/chart/values.yaml
+        cmd: yq -i '.image.tag=strenv(VERSION) | .image.registry=strenv(REGISTRY)  | .image.repository=strenv(REPOSITORY)' infra/chart/values.yaml
     
     - uses: mikefarah/yq@master
       with:
