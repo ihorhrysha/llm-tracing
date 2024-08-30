@@ -5,7 +5,7 @@ The goal of this repo is to show progress of monitoring/observability approaches
 ## Steps:
 ### 0.7.0
 **k8s python app**
-
+test
 
 ### 0.6.0
 **k8s the manual approach**
