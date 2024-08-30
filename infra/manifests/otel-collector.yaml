@@ -1,17 +1,45 @@
-apiVersion: opentelemetry.io/v1beta1
+# apiVersion: opentelemetry.io/v1beta1
+# kind: OpenTelemetryCollector
+# metadata:
+#   name: sidecar-for-my-app
+# spec:
+#   mode: sidecar
+#   config:
+#     receivers:
+#       otlp:
+#         protocols:
+#           grpc:
+#           http:
+
+#     exporters:
+#       debug: {}
+#       otlp:
+#         endpoint: lgtm-tempo-distributor:4317
+#         tls:
+#           insecure: true
+
+#     service:
+#       pipelines:
+#         traces:
+#           receivers: [otlp]
+#           exporters: [otlp]
+
+
+apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
-  name: sidecar-for-my-app
+  name: otel-collector
 spec:
-  mode: sidecar
-  config:
+  config: |
     receivers:
-      jaeger:
+      otlp:
         protocols:
-          thrift_compact: {}
+          grpc:
+          http:
+    processors:
+      batch:
 
     exporters:
-      debug: {}
       otlp:
         endpoint: lgtm-tempo-distributor:4317
         tls:
@@ -20,5 +48,6 @@ spec:
     service:
       pipelines:
         traces:
-          receivers: [jaeger]
-          exporters: [debug, otlp]
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [otlp]

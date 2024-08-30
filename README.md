@@ -5,7 +5,10 @@ The goal of this repo is to show progress of monitoring/observability approaches
 ## Steps:
 ### 0.7.0
 **k8s python app**
-test
+install the app:
+```bash
+helm install app infra/chart --set secret.value=<openai-api-key>
+```
 
 ### 0.6.0
 **k8s the manual approach**

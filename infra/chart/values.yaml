@@ -18,7 +18,8 @@ volumeMounts:
     name: dev-mem
 autoscaling:
   enabled: false
-podAnnotations: {}
+podAnnotations:
+  sidecar.opentelemetry.io/inject: "true"
 imagePullSecrets: {}
 securityContext: {}
 podSecurityContext: {}
