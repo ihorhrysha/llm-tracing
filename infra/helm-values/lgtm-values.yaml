@@ -39,7 +39,7 @@ grafana:
 
 loki:
   # -- Deploy Loki if enabled. See [upstream readme](https://github.com/grafana/helm-charts/tree/main/charts/loki-distributed#values) for full values reference.
-  enabled: false
+  enabled: true
 
 # -- Mimir chart values. Resources are set to a minimum by default.
 mimir:
