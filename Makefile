@@ -1,3 +1,5 @@
+# docker compose commands
+
 build:
 	docker compose build
 
@@ -7,5 +9,5 @@ up:
 down:
 	docker compose down
 
-stop:
-	docker compose stop
+make-demo-cluster:
+	k3d cluster create k3d-monitoring --servers 1 --kubeconfig-update-default

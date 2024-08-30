@@ -4,6 +4,42 @@ The goal of this repo is to show progress of monitoring/observability approaches
 
 ## Steps:
 
+### 0.6.0
+**k8s the manual approach**
+
+The Plan:
+1. Install LGTM stack https://artifacthub.io/packages/helm/grafana/lgtm-distributed
+
+```bash
+k apply -f ./infra/manifests/monitoring-ns.yaml 
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+helm install lgtm grafana/lgtm-distributed -n monitoring -f ./infra/helm-values/lgtm-values.yaml
+```
+
+2. Install OpenTelemetry Operator https://opentelemetry.io/docs/kubernetes/operator/
+    
+```bash
+helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
+helm repo update
+helm install otel open-telemetry/opentelemetry-operator -n monitoring \
+--set "manager.collectorImage.repository=otel/opentelemetry-collector-k8s" \
+--set admissionWebhooks.certManager.enabled=false \
+--set admissionWebhooks.autoGenerateCert.enabled=true
+``` 
+
+3. Start collecting signals from fake app for example xk6-client-tracing
+
+```bash
+k apply -f ./infra/manifests/otel-collector.yaml
+k apply -f ./infra/manifests/myapp.yaml 
+k port-forward pods/myapp 8080:8080
+```
+
+It's alive! Now we can see traces in Grafana Tempo.
+
+![alt text](./static/k8s-traces.png)
+
 ### 0.5.0
 The OpenTelemetry is a standard for tracing and monitoring. It has a lot of plugins for different languages and frameworks. The OpenTelemetry Python SDK is a powerful tool that can be used to trace our LLM app. The installation is simple:
 Adding dependencies manually:
@@ -23,11 +59,11 @@ We can trace calls to LLM pipelines but with SQL auto instrumentation it is quit
 
 ![Tempo LLM](./static/tempo_llm.png)
 
-```python
 
 ### 0.4.0 
 The simples way to trace the LLM ap is to use LangSmith's tracing library and stream data to their servers.
 The installation is simplem since we use LangChain:
+
 ```bash
 export LANGCHAIN_API_KEY=lsv2_pt_sfdfgsdfsdf4s5d2f4sdfs5f4sd7_21s1df4sdfs_fake
 export LANGCHAIN_TRACING_V2=true

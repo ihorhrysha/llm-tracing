@@ -26,7 +26,7 @@ services:
     ports:
       - 4317:4317
     volumes:
-      - ./otel/otel-collector.yaml:/etc/otel-collector.yaml
+      - ./infra/otel/otel-collector.yaml:/etc/otel-collector.yaml
     command: --config=/etc/otel-collector.yaml
 
   prometheus:
@@ -36,7 +36,7 @@ services:
       - --web.enable-remote-write-receiver
       - --enable-feature=exemplar-storage
     volumes:
-      - ./otel/prometheus.yaml:/etc/prometheus.yaml
+      - ./infra/otel/prometheus.yaml:/etc/prometheus.yaml
     ports:
       - 9090:9090
     depends_on:
@@ -47,7 +47,7 @@ services:
     ports:
       - 14268:14268
     volumes:
-      - ./otel/tempo.yaml:/etc/tempo.yaml
+      - ./infra/otel/tempo.yaml:/etc/tempo.yaml
     command: ["-config.file=/etc/tempo.yaml"]
 
   # Loki
@@ -57,7 +57,7 @@ services:
       - -config.file=/etc/loki/local-config.yaml
       - -log.level=error
     volumes:
-      - ./otel/loki.yaml:/etc/loki/local-config.yaml
+      - ./infra/otel/loki.yaml:/etc/loki/local-config.yaml
     ports:
       - 3100:3100
 
@@ -65,7 +65,7 @@ services:
   grafana:
     image: grafana/grafana:9.4.3
     volumes:
-      - ./otel/grafana-datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+      - ./infra/otel/grafana-datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
