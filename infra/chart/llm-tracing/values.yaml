@@ -1,0 +1,24 @@
+replicaCount: 1
+image:
+  registry: "ghcr.io"
+  repository: "ihorhrysha/llm-tracing"
+  tag: "v1.0.0-tbd"
+secret:
+  name: llm-tracing-secrets
+  key: api-key
+  value: "tbd"
+  env: OPENAI_API_KEY
+volumes:
+  - name: dev-mem
+    hostPath:
+      path: /dev/mem
+      type: ""
+volumeMounts:
+  - mountPath: /dev/mem
+    name: dev-mem
+autoscaling:
+  enabled: false
+podAnnotations: {}
+imagePullSecrets: {}
+securityContext: {}
+podSecurityContext: {}
