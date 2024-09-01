@@ -1,47 +1,28 @@
-# apiVersion: opentelemetry.io/v1beta1
-# kind: OpenTelemetryCollector
-# metadata:
-#   name: sidecar-for-my-app
-# spec:
-#   mode: sidecar
-#   config:
-#     receivers:
-#       otlp:
-#         protocols:
-#           grpc:
-#           http:
-
-#     exporters:
-#       debug: {}
-#       otlp:
-#         endpoint: lgtm-tempo-distributor:4317
-#         tls:
-#           insecure: true
-
-#     service:
-#       pipelines:
-#         traces:
-#           receivers: [otlp]
-#           exporters: [otlp]
-
-
 apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
-  name: otel-collector
+  name: apps-telemetry
 spec:
   config: |
     receivers:
       otlp:
         protocols:
-          grpc:
-          http:
+          grpc: {}
+          http: {}
     processors:
-      batch:
+      batch: {}
 
     exporters:
+      debug:
+        verbosity: detailed
+      # otlphttp:
+      #   endpoint: http://lgtm-loki-distributor.monitoring.svc.cluster.local:3100/otlp
+      #   tls:
+      #     insecure: true
+      # prometheus:
+      #   endpoint: 0.0.0.0:8888
       otlp:
-        endpoint: lgtm-tempo-distributor:4317
+        endpoint: lgtm-tempo-distributor.monitoring.svc.cluster.local:4317
         tls:
           insecure: true
 
@@ -51,3 +32,10 @@ spec:
           receivers: [otlp]
           processors: [batch]
           exporters: [otlp]
+        metrics:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [debug]
+        logs:
+          receivers: [otlp]
+          exporters: [debug]

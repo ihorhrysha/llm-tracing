@@ -4,14 +4,26 @@ The goal of this repo is to show progress of monitoring/observability approaches
 
 ## Steps:
 ### 0.7.0
-**k8s python app**
-install the app:
+**k8s LLM app traces**
+
+Configure OpenTelemetry collector and Instrumentation to get traces from our app:
+```bash
+k apply -f infra/manifests/otel-collector.yaml
+k apply -f infra/manifests/otel-instrument.yaml
+```
+
+Install our app:
 ```bash
 helm install app infra/chart --set secret.value=<openai-api-key>
 ```
+Traces are sent to Grafana Tempo through OpenTelemetry collector. We can see them in Grafana Tempo UI.
+![alt text](./static/llm-tracing.png)
+
+Logs and metrics are sent to OpenTelemetry collector and logged. Moving them to Loki and Prometheus is a WIP.
+![alt text](./static/otel-logs.png)
 
 ### 0.6.0
-**k8s the manual approach**
+**k8s demo app traces**
 
 The Plan:
 1. Install LGTM stack https://artifacthub.io/packages/helm/grafana/lgtm-distributed
