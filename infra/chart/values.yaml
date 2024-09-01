@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   registry: "ghcr.io"
   repository: "ihorhrysha/llm-tracing"
-  tag: "0.6.0-c72ec6e"
+  tag: "0.6.0-6647fda"
 secret:
   name: llm-tracing-secrets
   key: api-key
