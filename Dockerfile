@@ -29,4 +29,4 @@ COPY ./src/ ./
 # RUN opentelemetry-bootstrap -a install
 
 # EXPOSE 8080
-ENTRYPOINT ["flask", "--app", "app_flask.py", "run", "-p", "8080", "-h", "0.0.0.0"]
+ENTRYPOINT ["flask", "--app", "app.py", "run", "-p", "8080", "-h", "0.0.0.0"]
