@@ -20,6 +20,7 @@ autoscaling:
   enabled: false
 podAnnotations:
   sidecar.opentelemetry.io/inject: "true"
+  instrumentation.opentelemetry.io/inject-python: "true"
 imagePullSecrets: {}
 securityContext: {}
 podSecurityContext: {}
